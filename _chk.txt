@@ -1,0 +1,20 @@
+total 2000
+drwxr-xr-x 1 Jaya 197121       0 Sep  7 06:23 .
+drwxr-xr-x 1 Jaya 197121       0 Sep  7 00:17 ..
+drwxr-xr-x 1 Jaya 197121       0 Sep  7 00:23 .claude
+-rw-r--r-- 1 Jaya 197121      45 Sep  7 00:18 .gitignore
+drwxr-xr-x 1 Jaya 197121       0 Sep  7 06:14 SalesDashboard.Report
+drwxr-xr-x 1 Jaya 197121       0 Sep  7 06:14 SalesDashboard.SemanticModel
+-rw-r--r-- 1 Jaya 197121 1767146 Sep  7 06:23 SalesDashboard.html
+-rw-r--r-- 1 Jaya 197121     186 Sep  7 06:14 SalesDashboard.pbip
+-rw-r--r-- 1 Jaya 197121       0 Sep  7 06:23 _chk.txt
+-rw-r--r-- 1 Jaya 197121    4635 Sep  7 06:16 build_html.js
+-rw-r--r-- 1 Jaya 197121     210 Sep  7 06:23 build_log.txt
+-rw-r--r-- 1 Jaya 197121     626 Sep  7 01:09 check_braces.js
+-rw-r--r-- 1 Jaya 197121   36038 Sep  7 06:10 dashboard_template.html
+-rw-r--r-- 1 Jaya 197121   43841 Sep  7 01:12 gen_pages.js
+-rw-r--r-- 1 Jaya 197121   20006 Sep  7 00:43 gen_report.js
+-rw-r--r-- 1 Jaya 197121   91568 Sep  7 00:50 retail_exec_report.png
+drwxr-xr-x 1 Jaya 197121       0 Sep  7 01:14 shots
+-rw-r--r-- 1 Jaya 197121   13291 Sep  7 00:42 vc_schema.json
+-rw-r--r-- 1 Jaya 197121   41601 Sep  7 00:42 vconfig_schema.json

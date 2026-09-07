@@ -1,0 +1,4 @@
+Wrote D:\PBI\SalesDashboard\SalesDashboard.html
+  facts: 24344 | dims: channel=2, category=8, subcategory=32, brand=11, color=16, country=9, state=58, storeSize=5, product=2382, store=58
+  size: 1725.7 KB
+RC=0

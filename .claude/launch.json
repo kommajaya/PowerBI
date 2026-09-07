@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "SalesDashboard HTML",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8080", "--directory", "D:/PBI/SalesDashboard"],
+      "port": 8080,
+      "url": "http://localhost:8080"
+    }
+  ]
+}

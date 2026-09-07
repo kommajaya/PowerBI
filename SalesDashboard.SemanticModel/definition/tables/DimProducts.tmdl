@@ -1,0 +1,104 @@
+table DimProducts
+	lineageTag: afd9fa70-f7d0-4b8f-b181-2fe17464b2d3
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: aff95aba-c329-4362-9b98-23ae6ac47882
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Name'
+		dataType: string
+		lineageTag: d847c037-b753-4ec2-99ad-e0b690160a26
+		summarizeBy: none
+		sourceColumn: Product Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Brand
+		dataType: string
+		lineageTag: 88e6a01a-1485-4efd-9fa9-c2072b9b4862
+		summarizeBy: none
+		sourceColumn: Brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column Color
+		dataType: string
+		lineageTag: 8ffeb39b-7bb7-4eff-ae28-aefef217060c
+		summarizeBy: none
+		sourceColumn: Color
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit Cost USD'
+		dataType: double
+		lineageTag: 64d91b4b-d1a3-465e-8454-aaa189289008
+		summarizeBy: none
+		sourceColumn: Unit Cost USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Unit Price USD'
+		dataType: double
+		lineageTag: 0427c433-9da8-406c-bb6f-b5b0f5e06408
+		summarizeBy: none
+		sourceColumn: Unit Price USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SubcategoryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: d2b7f601-0c6f-490a-943d-5bc94c6e6055
+		summarizeBy: none
+		sourceColumn: SubcategoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subcategory
+		dataType: string
+		lineageTag: 3399f7be-74b7-4f28-af81-7f4f1c89c506
+		summarizeBy: none
+		sourceColumn: Subcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column CategoryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: cc1e8183-3e13-4318-a0e5-f69762f97f8f
+		summarizeBy: none
+		sourceColumn: CategoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 26de58eb-5d3d-4177-8d4d-9b1e00b41482
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimProducts = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\Jaya\Downloads\SalesData\DimProducts.csv"), [Delimiter = ",", Columns = 10, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"ProductKey", Int64.Type}, {"Product Name", type text}, {"Brand", type text}, {"Color", type text}, {"Unit Cost USD", type number}, {"Unit Price USD", type number}, {"SubcategoryKey", Int64.Type}, {"Subcategory", type text}, {"CategoryKey", Int64.Type}, {"Category", type text}})
+				in
+				  #"Changed column type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

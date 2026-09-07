@@ -1,0 +1,107 @@
+table DimDate
+	lineageTag: 0e4606cc-7bc9-4de5-a4f1-ca03758303d0
+
+	column Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1e147572-a6cb-441b-b04f-5fa1dd059e92
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 130b8398-a114-4e14-ad10-2ba594d8af8f
+			defaultHierarchy: LocalDateTable_f170f954-d066-46ad-af0d-8ad245370937.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 37123405-9239-4cfa-a3e1-acf880b4a270
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 504cd40c-0958-49f4-a414-6fa5eb2c2f2f
+		summarizeBy: sum
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: b5b3b576-b466-49ad-a1a8-5683289af854
+		summarizeBy: none
+		sourceColumn: Month Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: d780268f-39d9-4e0d-9954-d9669408ce75
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		dataType: int64
+		formatString: 0
+		lineageTag: 2da05171-b782-4108-9f91-d3f83f87ef70
+		summarizeBy: sum
+		sourceColumn: Day
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Weekday Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0a70427f-0001-46ea-835a-418c67d0f319
+		summarizeBy: sum
+		sourceColumn: Weekday Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Weekday Name'
+		dataType: string
+		lineageTag: 631a259d-b16d-45de-a727-a2fbf03785d3
+		summarizeBy: none
+		sourceColumn: Weekday Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year-Month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a85f3c4d-0e42-4829-a1b6-8f2dfe426a93
+		summarizeBy: none
+		sourceColumn: Year-Month
+
+		variation Variation
+			isDefault
+			relationship: 05da14ca-259f-4e63-852d-95647f0f7ffe
+			defaultHierarchy: LocalDateTable_4cdef8ef-89a2-45e6-8a73-5dc075fe8296.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\Jaya\Downloads\SalesData\DimDate.csv"), [Delimiter = ",", Columns = 9, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Date", type datetime}, {"Year", Int64.Type}, {"Month Number", Int64.Type}, {"Month Name", type text}, {"Quarter", type text}, {"Day", Int64.Type}, {"Weekday Number", Int64.Type}, {"Weekday Name", type text}, {"Year-Month", type date}})
+				in
+				  #"Changed column type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

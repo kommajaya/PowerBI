@@ -1,0 +1,105 @@
+table DimStores
+	lineageTag: 45446c2c-4c1e-4159-8580-1d275ba4e1f7
+
+	column StoreKey
+		dataType: int64
+		formatString: 0
+		lineageTag: f49714f6-8ff3-4436-87e4-db760339f063
+		summarizeBy: none
+		sourceColumn: StoreKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 236867cc-fb56-4148-8d74-43f6cabc7efd
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 52f9b9d1-140f-41c9-9f77-cdf042d2382c
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Square Meters'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c4503f2-0c39-4521-ad4a-78df05c16197
+		summarizeBy: sum
+		sourceColumn: Square Meters
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Open Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1347e2c2-214e-4928-9ef1-b702ef9be931
+		summarizeBy: none
+		sourceColumn: Open Date
+
+		variation Variation
+			isDefault
+			relationship: 98dc3e6f-48b8-40c8-9525-c347c11e45a9
+			defaultHierarchy: LocalDateTable_e0b38cb4-545d-472c-a491-88a9335faba6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Channel
+		dataType: string
+		lineageTag: 980d918b-841b-47e4-aad2-94a00ff14bde
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Store Open Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ce6a2010-3939-49ef-b450-9f02f01b4e7f
+		summarizeBy: none
+		sourceColumn: Store Open Date
+
+		variation Variation
+			isDefault
+			relationship: b9f0eed3-eb05-43c1-8fe7-1cacd63f4a27
+			defaultHierarchy: LocalDateTable_9ba36f84-d0e6-4f44-b017-bde8f46d5ed7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Store Name'
+		dataType: string
+		lineageTag: 70943c03-84e1-467a-b6b0-8ff049bf3242
+		summarizeBy: none
+		sourceColumn: Store Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Store Size Band'
+		dataType: string
+		lineageTag: a3129b2a-5062-44c0-b65e-4f286fcdc619
+		summarizeBy: none
+		sourceColumn: Store Size Band
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimStores = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\Jaya\Downloads\SalesData\DimStores.csv"), [Delimiter = ",", Columns = 9, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"StoreKey", Int64.Type}, {"Country", type text}, {"State", type text}, {"Square Meters", Int64.Type}, {"Open Date", type date}, {"Channel", type text}, {"Store Open Date", type datetime}, {"Store Name", type text}, {"Store Size Band", type text}})
+				in
+				  #"Changed column type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

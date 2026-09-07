@@ -1,0 +1,185 @@
+table DimCustomers
+	lineageTag: 3f1b8cf7-2f17-496c-88f0-ff3e5d56646e
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: a3196466-03dd-4cfd-bc19-bd41cf52dc04
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 0fcaad6d-9805-4f51-ba4f-4cfd836f5948
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 0823f4cd-ef42-40aa-b8c2-0f0ba9e395be
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: c8273270-511a-4dfa-bf54-9db9b0ae4fa2
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'State Code'
+		dataType: string
+		lineageTag: 9cd7e091-8cd9-494f-a649-22f9a983309d
+		summarizeBy: none
+		sourceColumn: State Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 56dbbca6-27b8-4be2-a449-01cc7959b377
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Zip Code'
+		dataType: string
+		lineageTag: b46bd309-ece4-4d83-b306-63a2186e23bd
+		summarizeBy: none
+		sourceColumn: Zip Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: d400f28c-235f-4ebe-a4c7-52af911cbd0f
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Continent
+		dataType: string
+		lineageTag: 983d1ec9-efd5-48bd-bcc6-c3efd1f4bad9
+		summarizeBy: none
+		sourceColumn: Continent
+
+		annotation SummarizationSetBy = Automatic
+
+	column Birthday
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0544182f-f2b4-442f-a982-6e94965b62ba
+		summarizeBy: none
+		sourceColumn: Birthday
+
+		variation Variation
+			isDefault
+			relationship: 1255792b-b58e-4e86-b0c1-90278d9bffc0
+			defaultHierarchy: LocalDateTable_612c3713-7306-4d1e-a496-d4b86c27dbaa.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CustomerKeyName
+		dataType: string
+		lineageTag: c81ed010-e3b5-45e1-ad1b-eab5cd70c1eb
+		summarizeBy: none
+		sourceColumn: CustomerKeyName
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Recency (Days)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1319a0c9-f0f1-4cec-979d-540f7f29fdc3
+		summarizeBy: sum
+		sourceColumn: Recency (Days)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Frequency (Orders)'
+		dataType: int64
+		formatString: 0
+		lineageTag: d1a3d44e-79b7-46ff-8138-71765e883c53
+		summarizeBy: sum
+		sourceColumn: Frequency (Orders)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Monetary (Sales)'
+		dataType: double
+		lineageTag: a10895d8-5616-4bbd-ba63-e777c18b95ee
+		summarizeBy: sum
+		sourceColumn: Monetary (Sales)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'R Score'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6866a2d3-4caf-44b4-889a-9490909c09bf
+		summarizeBy: sum
+		sourceColumn: R Score
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'F Score'
+		dataType: int64
+		formatString: 0
+		lineageTag: 979f8834-52b6-48af-84ca-ed1e0a30b06e
+		summarizeBy: sum
+		sourceColumn: F Score
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'M Score'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7153c4f6-1d34-44f8-94c3-4601bb1515a4
+		summarizeBy: sum
+		sourceColumn: M Score
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'RFM Segment'
+		dataType: string
+		lineageTag: a2086ed4-aed2-428e-ad96-a420dfb1c4ab
+		summarizeBy: none
+		sourceColumn: RFM Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Band'
+		dataType: string
+		lineageTag: 279c8c57-9b56-4dfa-804d-6f9d98157ab9
+		summarizeBy: none
+		sourceColumn: Age Band
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCustomers = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\Jaya\Downloads\SalesData\DimCustomers.csv"), [Delimiter = ",", Columns = 19, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"CustomerKey", Int64.Type}, {"Gender", type text}, {"Name", type text}, {"City", type text}, {"State Code", type text}, {"State", type text}, {"Zip Code", type text}, {"Country", type text}, {"Continent", type text}, {"Birthday", type date}, {"CustomerKeyName", type text}, {"Recency (Days)", Int64.Type}, {"Frequency (Orders)", Int64.Type}, {"Monetary (Sales)", type number}, {"R Score", Int64.Type}, {"F Score", Int64.Type}, {"M Score", Int64.Type}, {"RFM Segment", type text}, {"Age Band", type text}})
+				in
+				  #"Changed column type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

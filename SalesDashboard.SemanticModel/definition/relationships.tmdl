@@ -1,0 +1,41 @@
+relationship 130b8398-a114-4e14-ad10-2ba594d8af8f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.Date
+	toColumn: LocalDateTable_f170f954-d066-46ad-af0d-8ad245370937.Date
+
+relationship 05da14ca-259f-4e63-852d-95647f0f7ffe
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.Year-Month
+	toColumn: LocalDateTable_4cdef8ef-89a2-45e6-8a73-5dc075fe8296.Date
+
+relationship 98dc3e6f-48b8-40c8-9525-c347c11e45a9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimStores.'Open Date'
+	toColumn: LocalDateTable_e0b38cb4-545d-472c-a491-88a9335faba6.Date
+
+relationship b9f0eed3-eb05-43c1-8fe7-1cacd63f4a27
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimStores.'Store Open Date'
+	toColumn: LocalDateTable_9ba36f84-d0e6-4f44-b017-bde8f46d5ed7.Date
+
+relationship AutoDetected_c439149f-b645-4523-a7e0-bdc651410d02
+	fromColumn: FactSales.ProductKey
+	toColumn: DimProducts.ProductKey
+
+relationship AutoDetected_d75b40a5-bf8d-433d-a7b6-b6aceae3e699
+	fromColumn: FactSales.StoreKey
+	toColumn: DimStores.StoreKey
+
+relationship 1255792b-b58e-4e86-b0c1-90278d9bffc0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimCustomers.Birthday
+	toColumn: LocalDateTable_612c3713-7306-4d1e-a496-d4b86c27dbaa.Date
+
+relationship AutoDetected_49dc6103-24c4-4956-95b9-61868a634e76
+	fromColumn: FactSales.CustomerKey
+	toColumn: DimCustomers.CustomerKey
+
+relationship b079d81a-bf09-9e34-8f08-9b0e00dd7cb4
+	fromColumn: FactSales.'Order Date'
+	toColumn: DimDate.Date
+

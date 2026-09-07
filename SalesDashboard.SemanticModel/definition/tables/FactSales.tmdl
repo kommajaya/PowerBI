@@ -1,0 +1,191 @@
+table FactSales
+	lineageTag: 0e4afb24-5d5c-4e63-8dd7-8da7de148767
+
+	measure 'Total Sales' = SUM(FactSales[Line Sales])
+		formatString: #,##0.00
+		displayFolder: KPI
+		lineageTag: 9a7bf2cd-43f2-4f1d-9314-14862221c908
+
+	measure 'Total Cost' = SUM(FactSales[Line Cost])
+		formatString: #,##0.00
+		displayFolder: KPI
+		lineageTag: 5c7e2e8d-8c52-4e17-9397-59e9200afb5b
+
+	measure 'Total Quantity' = SUM(FactSales[Quantity])
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 538f7d4c-3433-4961-a815-1b648fd125dc
+
+	measure 'Gross Profit' = [Total Sales] - [Total Cost]
+		formatString: #,##0.00
+		displayFolder: KPI
+		lineageTag: a6f2cc48-d907-438f-9354-4e77a809eb71
+
+	measure 'Profit Margin %' = DIVIDE([Gross Profit], [Total Sales], 0)
+		formatString: 0.00%
+		displayFolder: KPI
+		lineageTag: 3ba176ee-de96-4cce-9d2d-576d37300864
+
+	measure 'Total Orders' = DISTINCTCOUNT(FactSales[Order Number])
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: b465280b-7c5d-4377-ad63-0a1fc8bc10dc
+
+	measure 'Avg Order Value' = DIVIDE([Total Sales], [Total Orders], 0)
+		formatString: #,##0.00
+		displayFolder: KPI
+		lineageTag: 53214cd3-4755-40ac-9460-9c3cc1a777b7
+
+	measure 'Active Customers' = DISTINCTCOUNT(FactSales[CustomerKey])
+		formatString: #,##0
+		displayFolder: KPI
+		lineageTag: 18609c36-a58b-48b5-8ec5-f7e34be8c621
+
+	measure 'Units per Order' = DIVIDE([Total Quantity], [Total Orders], 0)
+		formatString: #,##0.0
+		displayFolder: KPI
+		lineageTag: e04f9196-7bca-47a0-aaf8-9e47044cf4c3
+
+	measure 'Sales YTD' = TOTALYTD([Total Sales], DimDate[Date])
+		formatString: #,##0.00
+		displayFolder: KPI
+		lineageTag: 6e6925bd-08e2-4520-99e5-e4f0c0569ab4
+
+	measure 'Sales PY' = CALCULATE([Total Sales], DATEADD(DimDate[Date], -1, YEAR))
+		formatString: #,##0.00
+		displayFolder: KPI
+		lineageTag: d93b8665-fcb1-40ae-a210-2680116d99c4
+
+	measure 'Sales YoY' = [Total Sales] - [Sales PY]
+		formatString: #,##0.00
+		displayFolder: KPI
+		lineageTag: a6e28831-6afa-418d-b422-a244a0d6621d
+
+	measure 'Sales YoY %' = DIVIDE([Sales YoY], [Sales PY], 0)
+		formatString: 0.00%
+		displayFolder: KPI
+		lineageTag: 1c78c12a-8a9e-4db8-a751-070374da35f1
+
+	measure 'Sales MoM %' = VAR CurrentMonthSales = [Total Sales] VAR PrevMonthSales = CALCULATE([Total Sales], DATEADD(DimDate[Date], -1, MONTH)) RETURN DIVIDE(CurrentMonthSales - PrevMonthSales, PrevMonthSales, 0)
+		formatString: 0.00%
+		displayFolder: KPI
+		lineageTag: 4ab172e3-d084-4875-b87d-609733388049
+
+	measure 'Gross Profit YTD' = TOTALYTD([Gross Profit], DimDate[Date])
+		formatString: #,##0.00
+		displayFolder: KPI
+		lineageTag: 430be88c-3f66-4f89-883b-da2971a71a4c
+
+	column 'Order Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c435ba3-1ceb-422a-a708-4b60121fb641
+		summarizeBy: sum
+		sourceColumn: Order Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Line Item'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f5f53a6-59f3-4eb2-bac8-77c701d276c1
+		summarizeBy: sum
+		sourceColumn: Line Item
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8dfac73e-08c5-4023-8c98-657f74f7d3b5
+		summarizeBy: none
+		sourceColumn: Order Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Delivery Date'
+		dataType: string
+		lineageTag: 8435d278-bba5-4e4a-b797-371a0bd22b58
+		summarizeBy: none
+		sourceColumn: Delivery Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 24998d9b-a231-4885-bd61-156b4862a3d5
+		summarizeBy: none
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column StoreKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 6db6f4a5-9978-4182-9c5a-fbc31c7a3cc4
+		summarizeBy: none
+		sourceColumn: StoreKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 757aaaf0-860a-4b6f-bed0-45f9ca10fd2a
+		summarizeBy: none
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c20c308-19b3-4e5c-b385-4e38d389dff3
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Currency Code'
+		dataType: string
+		lineageTag: cd376472-a487-47f4-9b63-195ab2bff7ba
+		summarizeBy: none
+		sourceColumn: Currency Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Line Sales'
+		dataType: double
+		lineageTag: a9833417-3f01-4485-8442-f30b905eab7f
+		summarizeBy: sum
+		sourceColumn: Line Sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Line Cost'
+		dataType: double
+		lineageTag: a1659d1f-cc7e-4d00-9bc1-46219c621c76
+		summarizeBy: sum
+		sourceColumn: Line Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactSales = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents("C:\Users\Jaya\Downloads\SalesData\FactSales.csv"), [Delimiter = ",", Columns = 11, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Order Number", Int64.Type}, {"Line Item", Int64.Type}, {"Order Date", type datetime}, {"Delivery Date", type text}, {"CustomerKey", Int64.Type}, {"StoreKey", Int64.Type}, {"ProductKey", Int64.Type}, {"Quantity", Int64.Type}, {"Currency Code", type text}, {"Line Sales", type number}, {"Line Cost", type number}})
+				in
+				  #"Changed column type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
